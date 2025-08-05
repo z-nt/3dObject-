@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Three.js Basics</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script>
+	    console.log("hello");
+        // 1. Create a scene
+        const scene = new THREE.Scene();
+        
+        // 2. Create a camera
+        const camera = new THREE.PerspectiveCamera(
+            100, // Field of view
+            window.innerWidth / window.innerHeight, // Aspect ratio
+            0.1, // Near clipping plane
+            1000 // Far clipping plane
+        );
+        camera.position.z = 5;
+        
+        // 3. Create a renderer
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+
+
+const loader = new THREE.TextureLoader();
+
+loader.load(
+    './chaman.jpg', // Replace with the actual path to your image
+    function (texture) {
+        const material = new THREE.MeshBasicMaterial({
+            map: texture,
+            side: THREE.DoubleSide // Optional: to show texture on both sides of the plane
+        });
+        const geometry = new THREE.PlaneGeometry(5, 5); // Width and height of the plane
+        const plane = new THREE.Mesh(geometry, material);
+        scene.add(plane);
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    },
+    undefined,
+    function (err) {
+        console.error('An error happened loading the texture:', err);
+    }
+);
+
+
+
+
+    </script>
+</body>
+</html></html>
